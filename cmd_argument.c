@@ -1,40 +1,35 @@
-/*#include "manshell.h"
+#include "manshell.h"
 
-**
- * cmd_arg - handle command line argument.
- * @argc: number of argument.
- * @argv: array of argument.
+/**
+ * rd_cmdline - Reads a command line from the user
+ * and tokenizes it into arguments.
+ *
+ * @ln: Pointer to a buffer to store the command line.
+ * @n: Pointer to the size of the buffer.
+ * @arg: Pointer to an array of pointers to store
+ * the arguments.
  *
  * Return: Nothing.
- *
+ */
 
-int cmd_arg(int argc, char *argv[])
+void rd_cmdline(char **ln, size_t *n, char ***arg)
 {
-        int index;
+	int indx = 0;
+	char *tok;
+	int max_args = 4096;
 
-        while ((index = getopt(argc, argv, "h")) != -1)
-        {
-                switch (index)
-                {
-                        case 'h':
-                                printf("Usage: %s [options] command\n", argv[0]);
-                                printf("Options:\n");
-                                printf("  -h, --help    Print this help message\n");
-                                break;
-                        default:
-                                printf("Unknown option: %c\n", optopt);
-                                break;
-                }
-        }
+	if (getline(ln, n, stdin) == -1)
+	{
+		printf("\n");
+		exit(0);
+	}
 
-        if (optind < argc)
-        {
-                return execve(argv[optind], argv + optind, NULL);
-        }
-        else
-        {
-                printf("No command specified\n");
-                return -1;
-        }
+	*arg = malloc(max_args * sizeof(char *));
+	tok = strtok(*ln, " \n");
+	while (tok != NULL)
+	{
+		(*arg)[indx++] = tok;
+		tok = strtok(NULL, " \n");
+	}
+	(*arg)[indx] = NULL;
 }
-*/

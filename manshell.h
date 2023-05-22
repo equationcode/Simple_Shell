@@ -13,8 +13,7 @@
 #include <fcntl.h>
 #include <signal.h>
 
-char read_cmd_line(void);
-void print(void);
-int cmd_arg(int argc, char *argv[]);
+void rd_cmdline(char **ln, size_t *n, char ***arg);
+void cmd_exec(char **arg);
 
 #endif
