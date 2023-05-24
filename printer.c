@@ -6,14 +6,14 @@
  * @arg: Array of pointers to the arguments
  * of the command.
  * @prog_name: The name of the program.
+ * @envp: The environment variables.
  *
  * Return: Nothing.
  */
 
-void cmd_exec(char **arg, char *prog_name)
+void cmd_exec(char **arg, char *prog_name, char **envp)
 {
 	pid_t my_id;
-	char *envp[] = {NULL};
 
 	if (arg[0] == NULL)
 		return;

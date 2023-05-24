@@ -5,11 +5,12 @@
  *
  * @argc: The number of arguments passed to the program.
  * @argv: An array of pointers to the arguments passed.
+ * @envp: The environment variables.
  *
  * Return: 0.
  */
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envp)
 {
 	char **arg;
 	int looper = 1, interact = isatty(STDIN_FILENO);
@@ -26,7 +27,7 @@ int main(int argc, char **argv)
 			fflush(stdout);
 		}
 		rd_cmdline(&ln, &n, &arg);
-		cmd_exec(arg, argv[0]);
+		cmd_exec(arg, argv[0], envp);
 		if (!interact)
 			looper = 0;
 	}
