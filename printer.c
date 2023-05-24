@@ -1,15 +1,17 @@
 #include "manshell.h"
 /**
  * cmd_exec - Executes a command by creating a new
- * process using fork() and execvp().
+ * process using fork() and execve().
  *
  * @arg: Array of pointers to the arguments
  * of the command.
+ * @prog_name: The name of the program.
+ * @envp: The environment variables.
  *
  * Return: Nothing.
  */
 
-void cmd_exec(char **arg)
+void cmd_exec(char **arg, char *prog_name, char **envp)
 {
 	pid_t my_id;
 
@@ -18,8 +20,8 @@ void cmd_exec(char **arg)
 	my_id = fork();
 	if (my_id == 0)
 	{
-		execvp(arg[0], arg);
-		perror(arg[0]);
+		execve(arg[0], arg, envp);
+		printf("%s: No such file or directory\n", prog_name);
 		exit(1);
 	}
 	else if (my_id > 0)

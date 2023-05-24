@@ -14,6 +14,6 @@
 #include <signal.h>
 
 void rd_cmdline(char **ln, size_t *n, char ***arg);
-void cmd_exec(char **arg);
+void cmd_exec(char **arg, char *prog_name, char **envp);
 
 #endif
