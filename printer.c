@@ -20,7 +20,7 @@ void cmd_exec(char **arg)
 	if (my_id == 0)
 	{
 		execve(arg[0], arg, envp);
-		perror(arg[0]);
+		printf("%s: No such file or directory\n", arg[0]);
 		exit(1);
 	}
 	else if (my_id > 0)
