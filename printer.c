@@ -5,11 +5,12 @@
  *
  * @arg: Array of pointers to the arguments
  * of the command.
+ * @prog_name: The name of the program.
  *
  * Return: Nothing.
  */
 
-void cmd_exec(char **arg)
+void cmd_exec(char **arg, char *prog_name)
 {
 	pid_t my_id;
 	char *envp[] = {NULL};
@@ -20,7 +21,7 @@ void cmd_exec(char **arg)
 	if (my_id == 0)
 	{
 		execve(arg[0], arg, envp);
-		printf("%s: No such file or directory\n", arg[0]);
+		printf("%s: No such file or directory\n", prog_name);
 		exit(1);
 	}
 	else if (my_id > 0)
