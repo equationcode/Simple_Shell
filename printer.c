@@ -1,34 +1,26 @@
 #include "manshell.h"
+
 /**
- * cmd_exec - Executes a command by creating a new
- * process using fork() and execve().
- *
- * @arg: Array of pointers to the arguments
- * of the command.
- * @prog_name: The name of the program.
- * @envp: The environment variables.
- *
- * Return: Nothing.
+ * exec_cmd - Executes the given command line.
+ * @ln: The command line to execute.
+ * @prog_nm: The name of the program.
  */
-
-void cmd_exec(char **arg, char *prog_name, char **envp)
+void exec_cmd(char *ln, char *prog_nm, char **envp)
 {
-	pid_t my_id;
+	char *args[MX_LN / 2 + 1];
+	pid_t mypid;
+	int stats;
 
-	if (arg[0] == NULL)
-		return;
-	my_id = fork();
-	if (my_id == 0)
-	{
-		execve(arg[0], arg, envp);
-		printf("%s: No such file or directory\n", prog_name);
-		exit(1);
-	}
-	else if (my_id > 0)
-		wait(NULL);
+	tokenize_command_line(ln, args);
+
+	if (strcmp(args[0], "exit") == 0)
+		exit(EXIT_SUCCESS);
+
+	mypid = fork();
+	if (mypid == 0)
+		execute_in_child_process(args, envp, prog_nm);
+	else if (mypid > 0)
+		wait(&stats);
 	else
-	{
-		perror("fork");
-		exit(1);
-	}
+		perror("fork"), exit(EXIT_FAILURE);
 }

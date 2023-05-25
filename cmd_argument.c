@@ -1,35 +1,24 @@
 #include "manshell.h"
 
 /**
- * rd_cmdline - Reads a command line from the user
- * and tokenizes it into arguments.
- *
- * @ln: Pointer to a buffer to store the command line.
- * @n: Pointer to the size of the buffer.
- * @arg: Pointer to an array of pointers to store
- * the arguments.
- *
- * Return: Nothing.
+ * tokenize_command_line - Tokenizes the given command line into an array of
+ * arguments.
+ * @ln: The command line to tokenize.
+ * @args: The array to store the tokenized arguments.
  */
-
-void rd_cmdline(char **ln, size_t *n, char ***arg)
+void tokenize_command_line(char *ln, char **args)
 {
-	int indx = 0;
+	int i;
 	char *tok;
-	int max_args = 4096;
 
-	if (getline(ln, n, stdin) == -1)
-	{
-		printf("\n");
-		exit(0);
-	}
+	ln[strcspn(ln, "\n")] = '\0';
 
-	*arg = malloc(max_args * sizeof(char *));
-	tok = strtok(*ln, " \n");
+	tok = strtok(ln, " ");
+	i = 0;
 	while (tok != NULL)
 	{
-		(*arg)[indx++] = tok;
-		tok = strtok(NULL, " \n");
+		args[i++] = tok;
+		tok = strtok(NULL, " ");
 	}
-	(*arg)[indx] = NULL;
+	args[i] = NULL;
 }
