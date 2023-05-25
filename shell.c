@@ -39,9 +39,7 @@ int main(int argc __attribute__((unused)), char **argv, char **envp)
 	else
 	{
 		while ((rd_num = getline(&lne, &lenth, stdin)) != -1)
-		{
 			exec_cmd(lne, argv[0], envp);
-        	}
 	}
 
 	free(lne);

@@ -5,7 +5,7 @@
  * @ln: The command line to execute.
  * @prog_nm: The name of the program.
  */
-void exec_cmd(char *ln, char *prog_nm, char **envp )
+void exec_cmd(char *ln, char *prog_nm, char **envp)
 {
 	char *args[MX_LN / 2 + 1];
 	pid_t mypid;
@@ -14,7 +14,7 @@ void exec_cmd(char *ln, char *prog_nm, char **envp )
 	tokenize_command_line(ln, args);
 
 	if (strcmp(args[0], "exit") == 0)
-	exit(EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
 
 	mypid = fork();
 	if (mypid == 0)
